@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Fluid Droplets" %></title>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'application' %>
+    <%= vite_typescript_tag 'application' %>
+    <%= yield :head %>
+  </head>
+  <body class="h-full antialiased">
+    <div class="flex min-h-screen w-full">
+      <%= render partial: 'shared/sidebar' %>
+
+      <main class="relative flex min-h-screen flex-1 flex-col">
+        <%= render partial: 'shared/header' %>
+        <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div class="gradient-background min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-gray-200 md:min-h-min">
+            <div class="mx-auto max-w-7xl space-y-12 px-10 py-8">
+              <div class="space-y-8">
+                <%= yield %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<div class="flex min-h-0 w-48 flex-col gap-2 overflow-auto">
+  <div class="relative flex w-full min-w-0 flex-col p-4">
+    <div class="flex h-8 text-xs font-medium"></div>
+
+    <ul class="flex w-full min-w-0 flex-col gap-1">
+      <!-- Home Menu Item -->
+      <li class="relative">
+        <i class="fa-solid fa-house text-slate-300 mr-2"></i>
+        <%= link_to admin_dashboard_index_path do %>
+          <span>Home</span>
+        <% end %>
+      </li>
+
+      <!-- Settings Menu Item -->
+      <li class="relative">
+        <i class="fa-solid fa-gear text-slate-300 mr-2"></i>
+        <%= link_to admin_settings_path do %>
+          <span>Settings</span>
+        <% end %>
+      </li>
+
+      <!-- Users Menu Item -->
+      <li class="relative">
+        <i class="fa-solid fa-users text-slate-300 mr-2"></i>
+        <%= link_to admin_users_path do %>
+          <span>Users</span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

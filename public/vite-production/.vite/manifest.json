@@ -1,0 +1,35 @@
+{
+  "_client-CLQ7Fe08.js": {
+    "file": "assets/client-CLQ7Fe08.js",
+    "name": "client"
+  },
+  "entrypoints/application.css": {
+    "file": "assets/application-Co6Eb4Eg.css",
+    "src": "entrypoints/application.css",
+    "isEntry": true
+  },
+  "entrypoints/application.ts": {
+    "file": "assets/application-lBVSX_8l.js",
+    "name": "entrypoints/application.ts",
+    "src": "entrypoints/application.ts",
+    "isEntry": true
+  },
+  "entrypoints/home.tsx": {
+    "file": "assets/home-CbA7DSH2.js",
+    "name": "entrypoints/home.tsx",
+    "src": "entrypoints/home.tsx",
+    "isEntry": true,
+    "imports": [
+      "_client-CLQ7Fe08.js"
+    ]
+  },
+  "entrypoints/settings.tsx": {
+    "file": "assets/settings-C5dF1Fdx.js",
+    "name": "entrypoints/settings.tsx",
+    "src": "entrypoints/settings.tsx",
+    "isEntry": true,
+    "imports": [
+      "_client-CLQ7Fe08.js"
+    ]
+  }
+}

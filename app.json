@@ -1,0 +1,32 @@
+{
+  "name": "Droplet Template",
+  "description": "A template for Fluid Droplet applications",
+  "repository": "https://github.com/fluid-commerce/droplet-template",
+  "keywords": ["rails", "ruby", "ecommerce", "fluid", "fluid-commerce", "droplet"],
+  "addons": ["heroku-postgresql"],
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
+  "env": {
+    "RAILS_ENV": {
+      "description": "The Rails environment",
+      "value": "production"
+    },
+    "SECRET_KEY_BASE": {
+      "description": "A generated encryption key",
+      "generator": "secret"
+    },
+    "ADMIN_EMAIL" : {
+      "description": "An email address for the initial admin user",
+      "required": true
+    },
+    "ADMIN_PASSWORD" : {
+      "description": "A password for the initial admin user",
+      "required": true
+    }
+  },
+  "scripts": {
+    "postdeploy": "bundle exec rails db:prepare && bundle exec rails setup:create_admin"
+  }
+}

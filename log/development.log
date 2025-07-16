@@ -1,0 +1,50 @@
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='DropletTemplate'*/[0m
+  [1m[35m (198.4ms)[0m  [1m[35mCREATE DATABASE "droplet_template_development" ENCODING = 'unicode' /*application='DropletTemplate'*/[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='DropletTemplate'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "companies" CASCADE /*application='DropletTemplate'*/[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "companies" ("id" bigserial primary key, "fluid_shop" character varying NOT NULL, "authentication_token" character varying NOT NULL, "name" character varying NOT NULL, "settings" jsonb DEFAULT '{}', "webhook_verification_token" character varying, "fluid_company_id" bigint NOT NULL, "service_company_id" character varying, "company_droplet_uuid" character varying, "active" boolean DEFAULT FALSE, "uninstalled_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='DropletTemplate'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_companies_on_active" ON "companies" ("active") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_companies_on_authentication_token" ON "companies" ("authentication_token") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_companies_on_company_droplet_uuid" ON "companies" ("company_droplet_uuid") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_companies_on_fluid_company_id" ON "companies" ("fluid_company_id") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_companies_on_fluid_shop" ON "companies" ("fluid_shop") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "events" CASCADE /*application='DropletTemplate'*/[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "identifier" character varying, "name" character varying, "payload" jsonb DEFAULT '{}', "timestamp" timestamp(6), "status" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "company_id" bigint NOT NULL) /*application='DropletTemplate'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_events_on_company_id" ON "events" ("company_id") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_events_on_identifier" ON "events" ("identifier") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_events_on_name" ON "events" ("name") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "settings" CASCADE /*application='DropletTemplate'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "settings" ("id" bigserial primary key, "name" character varying NOT NULL, "description" character varying, "values" jsonb DEFAULT '{}', "schema" jsonb NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='DropletTemplate'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_settings_on_name" ON "settings" ("name") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='DropletTemplate'*/[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "permission_sets" character varying[] DEFAULT '{}') /*application='DropletTemplate'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='DropletTemplate'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token") /*application='DropletTemplate'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "webhooks" CASCADE /*application='DropletTemplate'*/[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "webhooks" ("id" bigserial primary key, "resource" character varying, "event" character varying, "active" boolean DEFAULT TRUE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='DropletTemplate'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mALTER TABLE "events" ADD CONSTRAINT "fk_rails_88786fdf2d"
+FOREIGN KEY ("company_id")
+  REFERENCES "companies" ("id")
+ /*application='DropletTemplate'*/[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='DropletTemplate'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250415073538) /*application='DropletTemplate'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250411062613),
+(20250409101245),
+(20250408162157),
+(20250404194351),
+(20250327162026),
+(20250319215636),
+(20250318161435); /*application='DropletTemplate'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-07-07 12:48:36.660176', '2025-07-07 12:48:36.660177') RETURNING "key" /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '970871794f27f13484e2963fd7dd7064c1f58910', '2025-07-07 12:48:36.667847', '2025-07-07 12:48:36.667847') RETURNING "key" /*application='DropletTemplate'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5886423937310838810) /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='DropletTemplate'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5886423937310838810) /*application='DropletTemplate'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='DropletTemplate'*/[0m
