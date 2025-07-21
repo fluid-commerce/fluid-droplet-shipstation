@@ -4,8 +4,8 @@ module FluidApi
   class BaseService
     attr_reader :company_token
 
-    BASE_URL = "https://api.fluid.app/api/company"
-    PUBLIC_BASE_URL = "https://api.fluid.app/api"
+    BASE_URL = 'https://api.fluid.app/api/company'
+    PUBLIC_BASE_URL = 'https://api.fluid.app/api'
 
     COMPANY_TOKENS = [
       ENV.fetch('FLUID_COMPANY_TOKEN', nil)

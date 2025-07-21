@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class OrdersController < Api::V1::ApplicationController
       def create
         create_order_service = Shipstation::CreateOrder.new(params, @current_company.id)
         result = create_order_service.call
-        
+
         if result.success?
           render json: { success: true, data: result.data }, status: :created
         else

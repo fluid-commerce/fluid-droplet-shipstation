@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Shipstation
   class CreateOrder
     attr_reader :params, :base_url, :api_key, :api_secret, :company_name
 
     def initialize(order_params, company_id)
-      @params = order_params["order"].to_unsafe_h.deep_symbolize_keys
+      @params = order_params['order'].to_unsafe_h.deep_symbolize_keys
       @company_name = Company.find(company_id)&.name
 
       integration_setting = IntegrationSetting.find_by(company_id: company_id)
-      @base_url = integration_setting.settings["api_base_url"]
-      @api_key = integration_setting.settings["api_key"]
-      @api_secret = integration_setting.settings["api_secret"]
+      @base_url = integration_setting.settings['api_base_url']
+      @api_key = integration_setting.settings['api_key']
+      @api_secret = integration_setting.settings['api_secret']
     end
 
     def call
