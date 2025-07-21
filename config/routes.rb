@@ -12,5 +12,14 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  resources :integration_settings, only: %i[create]
+
+  # API routes
+  namespace :api do
+    namespace :v1 do
+      resources :orders, only: %i[create]
+    end
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
