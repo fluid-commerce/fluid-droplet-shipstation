@@ -2,8 +2,6 @@
 
 module FluidApi
   class BaseService
-    # include ErrorLogger
-
     attr_reader :company_token
 
     BASE_URL = "https://api.fluid.app/api/company"
