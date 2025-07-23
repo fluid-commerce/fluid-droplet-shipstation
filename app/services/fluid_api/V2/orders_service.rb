@@ -6,7 +6,7 @@ module FluidApi
     class OrdersService < BaseService
       def update_order(id:, external_id:)
         response = HTTParty.patch(
-          "#{PUBLIC_BASE_URL}/v2/orders/#{id}/update_external_id",
+          "#{BASE_URL}/v2/orders/#{id}/update_external_id",
           headers: headers,
           body: update_external_id_body(external_id).to_json
         )
