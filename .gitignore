@@ -33,11 +33,11 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
-/node_modules
+/node_modules/*
 
 # Vite Ruby
 /public/vite*
-node_modules
+node_modules/*
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
@@ -48,3 +48,13 @@ node_modules
 # ignore environment files
 .env.local
 .env
+
+.rspec
+.eslintrc.json
+
+.DS_Store
+app/.DS_Store
+app/views/.DS_Store
+
+log/development.log
+public/*

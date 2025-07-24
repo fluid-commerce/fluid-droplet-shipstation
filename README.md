@@ -4,6 +4,8 @@ Droplets are integrations between third-party services and Fluid. This is a repo
 
 Documentation can be found in the [project's GitHub page](https://fluid-commerce.github.io/droplet-template/)
 
+For API authentication details, see [API Authentication](docs/api-authentication.md).
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/fluid-commerce/droplet-template)
 
 ### Technology Stack
