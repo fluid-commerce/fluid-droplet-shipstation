@@ -5,7 +5,7 @@ module Shipstation
     attr_reader :params, :base_url, :api_key, :api_secret, :company_name
 
     def initialize(order_params, company_id)
-      @params = order_params['order'].to_unsafe_h.deep_symbolize_keys
+      @params = order_params['order'].to_unsafe_h.deep_symbolize_keys[:payload][:order]
       @company_name = Company.find(company_id)&.name
 
       integration_setting = IntegrationSetting.find_by(company_id: company_id)
@@ -19,10 +19,16 @@ module Shipstation
 
       shipstation_order_id = order_response['orderId']
 
-      return nil unless shipstation_order_id.present?
+      return Result.new(false, nil, 'Failed to create order in ShipStation') unless shipstation_order_id.present?
 
-      fluid_service = FluidApi::V2::OrdersService.new(ENV.fetch('FLUID_COMPANY_TOKEN', nil))
-      fluid_service.update_order(id: params[:id], external_id: shipstation_order_id)
+      begin
+        fluid_service = FluidApi::V2::OrdersService.new(ENV.fetch('FLUID_COMPANY_TOKEN', nil))
+        fluid_service.update_order(id: params[:id], external_id: shipstation_order_id)
+
+        Result.new(true, { shipstation_order_id: shipstation_order_id }, nil)
+      rescue StandardError => e
+        Result.new(false, nil, "Failed to update order in Fluid: #{e.message}")
+      end
     end
 
     private
@@ -35,7 +41,7 @@ module Shipstation
     end
 
     def generate_auth_header
-      credentials = Base64.strict_encode64("#{api_key}:#{api_secret}")
+      credentials = Base64.encode64("#{api_key}:#{api_secret}").gsub("\n", '')
       "Basic #{credentials}"
     end
 
@@ -99,6 +105,21 @@ module Shipstation
           fulfillmentSku: item.dig(:product, :sku),
           adjustment: false
         }
+      end
+    end
+
+    # Simple result object to match controller expectations
+    class Result
+      attr_reader :success, :data, :error
+
+      def initialize(success, data, error)
+        @success = success
+        @data = data
+        @error = error
+      end
+
+      def success?
+        success
       end
     end
   end
