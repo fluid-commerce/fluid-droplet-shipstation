@@ -45,7 +45,7 @@ If the rails console is not working, try to run the following command ( error co
 `docker run -it --rm $(docker images -q | head -n 1) bash`
 This will run the rails console in a new docker container and you can run the command `bin/rails c` to run the rails console
 
-## Check migrations
+### Check migrations
 
 Check logs on Cloud Run Job to migrations `fluid-droplet-shipstation-migrations`
 
@@ -68,8 +68,15 @@ Just the rails server (port 3000)<br>
 Running everything (port 3200)<br>
 `bin/dev`
 
+### Running locally with docker
+
+Configure your environment variables in `.env` file
+and run the following command:  
+`make install`
 Running it as a docker service (port 3600)<br>
-`docker compose up`
+`make up`
+
+Run `make help` to see all commands
 
 ### License
 
