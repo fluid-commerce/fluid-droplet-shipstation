@@ -58,3 +58,4 @@ app/views/.DS_Store
 
 log/development.log
 public/*
+/node_modules
