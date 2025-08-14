@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+order_completed:
+  identifier: order_123
+  name: order_completed
+  payload: { "order_id": "123", "status": "completed", "total": 99.99 }
+  timestamp: <%= Time.current %>
+  status: 0
+  company: acme

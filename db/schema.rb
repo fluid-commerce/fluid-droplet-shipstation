@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_15_073538) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_18_142729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_073538) do
     t.datetime "uninstalled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "droplet_installation_uuid"
     t.index ["active"], name: "index_companies_on_active"
     t.index ["authentication_token"], name: "index_companies_on_authentication_token", unique: true
     t.index ["company_droplet_uuid"], name: "index_companies_on_company_droplet_uuid"
@@ -46,6 +47,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_073538) do
     t.index ["company_id"], name: "index_events_on_company_id"
     t.index ["identifier"], name: "index_events_on_identifier"
     t.index ["name"], name: "index_events_on_name"
+  end
+
+  create_table "integration_settings", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "token"
+    t.boolean "enabled", default: false
+    t.jsonb "settings", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_integration_settings_on_company_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -80,4 +91,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_073538) do
   end
 
   add_foreign_key "events", "companies"
+  add_foreign_key "integration_settings", "companies"
 end
