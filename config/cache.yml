@@ -12,5 +12,5 @@ test:
   <<: *default
 
 production:
-  database: fluid_droplet_shipstation_production_cache
+  database: cache
   <<: *default
