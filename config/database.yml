@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: droplet_shipstation_development
+  database: droplet_template_development
 
 test:
   <<: *default
-  database: droplet_shipstation_test
+  database: droplet_template_test
 
 production:
   <<: *default
