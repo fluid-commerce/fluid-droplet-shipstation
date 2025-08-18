@@ -3,11 +3,12 @@ class IntegrationSettingsController < ApplicationController
 
   def create
     integration_setting = IntegrationSetting.find_or_initialize_by(company_id: integration_setting_params[:company_id])
-    
+
     integration_setting.settings = {
       api_base_url: integration_setting_params[:api_base_url],
       api_key: integration_setting_params[:api_key],
-      api_secret: integration_setting_params[:api_secret]
+      api_secret: integration_setting_params[:api_secret],
+      fluid_api_token: integration_setting_params[:fluid_api_token]
     }
 
     integration_setting.save!
@@ -20,6 +21,6 @@ class IntegrationSettingsController < ApplicationController
   private
 
   def integration_setting_params
-    params.require(:integration_setting).permit(:company_id, :api_base_url, :api_key, :api_secret)
+    params.require(:integration_setting).permit(:company_id, :api_base_url, :api_key, :api_secret, :fluid_api_token)
   end
 end

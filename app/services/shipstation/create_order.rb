@@ -2,7 +2,7 @@
 
 module Shipstation
   class CreateOrder
-    attr_reader :params, :base_url, :api_key, :api_secret, :company_name
+    attr_reader :params, :base_url, :api_key, :api_secret, :fluid_api_token, :company_name
 
     def initialize(order_params, company_id)
       @params = order_params['order'].to_unsafe_h.deep_symbolize_keys
@@ -12,6 +12,7 @@ module Shipstation
       @base_url = integration_setting.settings['api_base_url']
       @api_key = integration_setting.settings['api_key']
       @api_secret = integration_setting.settings['api_secret']
+      @fluid_api_token = integration_setting.settings['fluid_api_token']
     end
 
     def call
@@ -22,7 +23,7 @@ module Shipstation
       return Result.new(false, nil, 'Failed to create order in ShipStation') unless shipstation_order_id.present?
 
       begin
-        fluid_service = FluidApi::V2::OrdersService.new(ENV.fetch('FLUID_COMPANY_TOKEN', nil))
+        fluid_service = FluidApi::V2::OrdersService.new(fluid_api_token)
         fluid_service.update_order(id: params[:id], external_id: shipstation_order_id)
 
         Result.new(true, { shipstation_order_id: shipstation_order_id }, nil)

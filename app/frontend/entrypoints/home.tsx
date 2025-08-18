@@ -7,9 +7,10 @@ interface FluidProps {
   baseUrl: string;
   apiKey: string;
   apiSecret: string;
+  fluidApiToken: string;
 }
 
-const Fluid = ({ companyId, baseUrl, apiKey, apiSecret }: FluidProps) => {
+const Fluid = ({ companyId, baseUrl, apiKey, apiSecret, fluidApiToken }: FluidProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -19,9 +20,10 @@ const Fluid = ({ companyId, baseUrl, apiKey, apiSecret }: FluidProps) => {
         api_base_url: formData.get('apiBaseUrl'),
         api_key: formData.get('apiKey'),
         api_secret: formData.get('apiSecret'),
+        fluid_api_token: formData.get('fluidApiToken'),
       }
     };
-    
+
     // Send form data to your endpoint
     fetch('/integration_settings', {
       method: 'POST',
@@ -83,8 +85,20 @@ const Fluid = ({ companyId, baseUrl, apiKey, apiSecret }: FluidProps) => {
               defaultValue={apiSecret}
             />
           </label>
+
+          <label>
+            <div className="pt-4 pb-2 text-sm font-medium">
+              Fluid API Token
+            </div>
+            <TextInput
+              type="password"
+              name="fluidApiToken"
+              placeholder="Fluid API token"
+              defaultValue={fluidApiToken}
+            />
+          </label>
         </div>
-        
+
         <div className="flex justify-end">
           <button
             type="submit"
@@ -105,5 +119,6 @@ const companyId = rootElement.dataset.companyId || '';
 const baseUrl = rootElement.dataset.baseUrl || '';
 const apiKey = rootElement.dataset.apiKey || '';
 const apiSecret = rootElement.dataset.apiSecret || '';
+const fluidApiToken = rootElement.dataset.fluidApiToken || '';
 
-root.render(<Fluid companyId={companyId} baseUrl={baseUrl} apiKey={apiKey} apiSecret={apiSecret} />);
+root.render(<Fluid companyId={companyId} baseUrl={baseUrl} apiKey={apiKey} apiSecret={apiSecret} fluidApiToken={fluidApiToken} />);

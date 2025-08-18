@@ -6,17 +6,13 @@ module FluidApi
 
     BASE_URL = 'https://api.fluid.app/api'
 
-    COMPANY_TOKENS = [
-      ENV.fetch('FLUID_COMPANY_TOKEN', nil)
-    ].compact.freeze
-
     def initialize(company_token)
       @company_token = company_token
     end
 
     def headers
       {
-        'Authorization' => "Bearer #{token}",
+        'Authorization' => "Bearer #{company_token}",
         'Content-Type' => 'application/json',
         'x-fluid-client' => 'droplet-shipstation'
       }
@@ -27,14 +23,6 @@ module FluidApi
     rescue JSON::ParserError => e
       Rails.logger.error("[ERROR][parse_response]: #{e.message}")
       raise
-    end
-
-    private
-
-    def token
-      return company_token if COMPANY_TOKENS.include?(company_token)
-
-      raise ArgumentError, "Invalid company_token: #{company_token.inspect}"
     end
   end
 end
