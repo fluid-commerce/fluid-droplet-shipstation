@@ -2,7 +2,8 @@
 
 SERVICE=fluid-droplet-shipstation
 SERVICE_RAILS_JOBS_CONSOLE=fluid-droplet-shipstation-jobs-console
-IMAGE_URL=us-west3-docker.pkg.dev/fluid-417204/fluid-droplets/fluid-droplet-shipstation/web:latest
+SERVICE_RAILS_JOBS_CONSOLE=fluid-droplet-shipstation-jobs-console
+IMAGE_URL=us-west3-docker.pkg.dev/fluid-417204/fluid-droplets/fluid-droplet-shipstation-rails/web:latest
 
 # Variables array - add your variables here
 VARS=(
@@ -23,6 +24,9 @@ COMPUTE_ENV_ARGS=""
 for var in "${VARS[@]}"; do
   COMPUTE_ENV_ARGS="$COMPUTE_ENV_ARGS --container-env=$var"
 done
+
+# Update the environment variables for the service cloud run web Cloud Run migrations
+gcloud run jobs update $SERVICE_JOBS_MIGRATIONS --region=us-west3 --image $IMAGE_URL $CLOUD_RUN_ENV_ARGS
 
 # Update the environment variables for the service cloud run web
 echo "Updating Cloud Run service: $SERVICE"
